@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nbware.push.mapper.ReservedSendRequestMapper" >
+    <sql id="SqlNoLock">
+        SET NOCOUNT ON;
+        SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;
+    </sql>
+    
+    <select id="selectList" resultType="com.nbware.push.model.ReservedSendRequest" useCache="true">
+		Select * from "ReservedSendRequest" order by "MsgMngID" desc
+    </select>
+    
+    <insert id="insertReservedSendRequest" parameterType="com.nbware.push.model.ReservedSendRequest">    	
+		insert into "ReservedSendRequest" (
+			"Title", "Content", "ReceiverID", "ReceiverType", "ImgUrl", "LinkUrl", "Result", "RequestDateTime", "ShowDate"
+		) values (
+			#{sendReq.title},
+			#{sendReq.content},
+			#{sendReq.receiverId},
+			'P',
+			'',
+			'',
+			0, now(), now()+interval '30 minute'
+		)
+    </insert>
+    
+    <select id="userList" resultType="String" useCache="true">
+    	select	"UserID" from "User"
+    </select>
+</mapper>
